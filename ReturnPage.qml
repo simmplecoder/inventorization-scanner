@@ -4,6 +4,8 @@ import QtQuick.Controls 2.2
 
 Item {
     id: returnPageView
+    property alias returnStatus: returnStatusLabel.text
+
     ColumnLayout {
         id: returnPageMenu
         x: 213
@@ -22,19 +24,35 @@ Item {
         }
 
         Rectangle {
-            id: rectangle
             width: lineEditLength
             height: 40
             color: "white"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             TextInput {
-                id: personIDEDit
+                id: itemIDEdit
                 width: parent.width
                 height: parent.height
                 font.pixelSize: 20
                 maximumLength: 8
-
             }
+
+
+        }
+
+        Label
+        {
+            id: returnStatusLabel
+            objectName: "returnStatusLabel"
+            function setReturnStatus(status) {
+                console.log("set return status to " + status)
+                ReturnPage.returnStatus = status
+            }
+            text: "empty"
+            width: 100
+            height: 20
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            font.pointSize: 14
+
         }
 
         Button {
@@ -43,6 +61,7 @@ Item {
             height: 30
             text: "Return the Item"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            onClicked:  submitReturnForm(itemIDEdit.text)
         }
 
         Button {
@@ -50,7 +69,7 @@ Item {
             width: 75
             height: 30
             text: "Back"
-            onClicked: stack.pop()
+            onClicked: stack.pop();
         }
     }
 }

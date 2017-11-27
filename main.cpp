@@ -1,9 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QObject>
+#include <QQuickWindow>
 
-#include <string>
-#include <vector>
+#include "borrower.h"
+#include "returnserver.h"
 
 //class borrower : public QObject
 //{
@@ -32,8 +33,14 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    auto borrowButton = engine.findChild<QObject*>("borrowItemButton");
+    QObject *topLevel = engine.rootObjects().value(0);
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
+    QObject* returnStatusLabel = engine.findChild<QObject*>("returnStatusLabel");
 
+    ReturnServer returner(returnStatusLabel);
+
+    QObject::connect(window, SIGNAL(submitReturnForm(QString)), &returner, SLOT(returnPressed(QString)));
+    //QObject::connect(&returner, SIGNAL(statusReady(QString)), returnStatusLabel, SIGNAL(onReturnStatusReady(QString)));
 //    new borrower{&app};
     return app.exec();
 }

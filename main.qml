@@ -8,6 +8,18 @@ ApplicationWindow {
     height: 480
     title: qsTr("Borrowment terminal")
 
+    signal submitReturnForm(string itemID)
+//    signal onReturnStatusReady(string status)
+    function setReturnStatus(status) {
+        console.log("set return status to " + status)
+        ReturnPage.returnStatus = status
+    }
+
+//    function setReturnStatus(status) {
+//        ReturnPage.returnStatus = status
+//        console.log("Status is " + status)
+//    }
+
     property int lineEditLength: 120
     background: Rectangle
     {
