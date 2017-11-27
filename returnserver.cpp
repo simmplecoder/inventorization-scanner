@@ -2,18 +2,31 @@
 #include <QString>
 #include <QVariant>
 
-ReturnServer::ReturnServer(QObject* target, QObject *parent) :
-    target(target),
-    QObject(parent)
+ReturnServer::ReturnServer(QQuickItem* parent) :
+    QQuickItem(parent),
+    returnStatus("Not set")
 {
 
 }
 
-void ReturnServer::returnPressed(const QString& str)
+void ReturnServer::submitForm(const QString &itemID)
 {
-    //qDebug() << "the signal got to slot correctly";
-    QVariant status = "Returned";
+    if (itemID == "11111111")
+    {
+        returnStatus = "Returned!";
+    }
+    else
+    {
+        returnStatus = "Not Returned!";
+    }
+}
 
-//    emit statusReady(QVariant::fromValue(status));
-    QMetaObject::invokeMethod(target, "setReturnStatus", Q_ARG(QVariant, status));
+void ReturnServer::setReturnStatus(QString status)
+{
+    returnStatus = status;
+}
+
+QString ReturnServer::getReturnStatus()
+{
+    return returnStatus;
 }

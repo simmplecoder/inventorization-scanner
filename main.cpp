@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QQuickWindow>
 
-#include "borrower.h"
+//#include "borrower.h"
 #include "returnserver.h"
 
 //class borrower : public QObject
@@ -26,6 +26,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qmlRegisterType<ReturnServer>("com.inventorization.communication", 1, 0, "ReturnServer");
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -33,13 +34,13 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    QObject *topLevel = engine.rootObjects().value(0);
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
-    QObject* returnStatusLabel = engine.findChild<QObject*>("returnStatusLabel");
+//    QObject *topLevel = engine.rootObjects().value(0);
+//    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
+//    QObject* returnStatusLabel = engine.findChild<QObject*>("returnStatusLabel");
 
-    ReturnServer returner(returnStatusLabel);
+//    ReturnServer returner(window);
 
-    QObject::connect(window, SIGNAL(submitReturnForm(QString)), &returner, SLOT(returnPressed(QString)));
+//    QObject::connect(window, SIGNAL(submitReturnForm(QString)), &returner, SLOT(returnPressed(QString)));
     //QObject::connect(&returner, SIGNAL(statusReady(QString)), returnStatusLabel, SIGNAL(onReturnStatusReady(QString)));
 //    new borrower{&app};
     return app.exec();

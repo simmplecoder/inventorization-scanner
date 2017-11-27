@@ -4,18 +4,23 @@
 #include <QObject>
 #include <QVariant>
 #include <QString>
-#include <QQuickWindow>
+#include <QQuickItem>
 
-class ReturnServer : public QObject
+class ReturnServer : public QQuickItem
 {
     Q_OBJECT
-
-    QObject* target;
+    Q_PROPERTY(QString returnStatus READ getReturnStatus WRITE setReturnStatus NOTIFY onReturnStatusChanged)
+    QString returnStatus;
 public:
-    ReturnServer(QObject* target, QObject* parent = nullptr);
+    ReturnServer(QQuickItem* parent = nullptr);
+
+signals:
+    void onReturnStatusChanged(QString status);
 
 public slots:
-    void returnPressed(const QString& str);
+    void submitForm(const QString& itemID);
+    QString getReturnStatus();
+    void setReturnStatus(QString status);
 };
 
 #endif // RETURNSERVER_H
