@@ -9,26 +9,17 @@ ApplicationWindow {
     height: 480
     title: qsTr("Borrowment terminal")
 
-//    signal submitReturnForm(string itemID)
-//    signal returnStatusReady(string status)
-//    function setReturnStatus(status)
-//    {
-//        console.log(status)
-////        ReturnPage.returnStatus = status
-//        returnStatusReady(status)
-//    }
-
     property int lineEditLength: 120
     background: Rectangle
     {
-        id: mainBackground
+        id: homePageBackground
         color: "gray"
     }
 
     StackView
     {
         id: stack
-        initialItem: returnPageComponent
+        initialItem: homePageComponent
     }
 
     Component

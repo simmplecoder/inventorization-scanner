@@ -21,6 +21,8 @@ public slots:
     void submitForm(const QString& itemID);
     QString getReturnStatus();
     void setReturnStatus(QString status);
+//    bool isBorrowed(const QString& itemID);
+//    bool itemExists(const QString& itemID);
 };
 
 #endif // RETURNSERVER_H

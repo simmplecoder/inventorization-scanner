@@ -20,14 +20,14 @@ Item {
         height: 282
         Layout.margins: 20
 
-//        Label {
-//            id: itemIDLabel
-//            text: "Item ID"
-//            width: 100
-//            height: 20
-//            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-//            font.pointSize: 14
-//        }
+        Label {
+            id: itemIDLabel
+            text: "Item ID"
+            width: 100
+            height: 20
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            font.pointSize: 14
+        }
 
         Rectangle {
             width: lineEditLength
@@ -67,15 +67,23 @@ Item {
             height: 30
             text: "Return the Item"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            onClicked:  {server.submitForm(itemIDEdit.text); returnStatusLabel.text = server.getReturnStatus();}
+            onClicked:  {
+                if (itemIDEdit.text.length > 0)
+                {
+                    server.submitForm(itemIDEdit.text)
+                    returnStatusLabel.text = server.getReturnStatus()
+                }
+                else
+                    returnStatusLabel.text = "<font color=\"yellow\">Please specify ID</font>"
+            }
         }
 
-//        Button {
-//            id: backButton
-//            width: 75
-//            height: 30
-//            text: "Back"
-//            onClicked: stack.pop();
-//        }
+        Button {
+            id: backButton
+            width: 75
+            height: 30
+            text: "Back"
+            onClicked: stack.pop();
+        }
     }
 }

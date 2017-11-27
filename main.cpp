@@ -3,30 +3,27 @@
 #include <QObject>
 #include <QQuickWindow>
 
-//#include "borrower.h"
 #include "returnserver.h"
+#include "borrowserver.h"
 
-//class borrower : public QObject
+#include "connectionpool.h"
+#include <QSqlError>
+
+//void initDatabaseConnection()
 //{
-//    Q_OBJECT
-
-//    std::vector<std::string> personIDs;
-//    std::vector<std::string> itemIDs;
-
-//public:
-//    borrower(QObject* parent = nullptr):
-//        personIDs{"11111111", "22222222"},
-//        itemIDs{"11111111", "22222222"}
-//    {}
-
-//public slots:
-
-//};
+//    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+//    db.setHostName("bigblue");
+//    db.setDatabaseName("flightdb");
+//    db.setUserName("acarlson");
+//    db.setPassword("1uTbSbAs");
+//    bool ok = db.open();
+//}
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     qmlRegisterType<ReturnServer>("com.inventorization.communication", 1, 0, "ReturnServer");
+    qmlRegisterType<BorrowServer>("com.inventorization.communication", 1, 0, "BorrowServer");
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -34,14 +31,15 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
-//    QObject *topLevel = engine.rootObjects().value(0);
-//    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
-//    QObject* returnStatusLabel = engine.findChild<QObject*>("returnStatusLabel");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setDatabaseName("TEST");
+    db.setUserName("root");
+    db.setPassword("123");
+    if (!db.open())
+    {
+        throw std::runtime_error{db.lastError().text().toStdString()};
+    }
 
-//    ReturnServer returner(window);
-
-//    QObject::connect(window, SIGNAL(submitReturnForm(QString)), &returner, SLOT(returnPressed(QString)));
-    //QObject::connect(&returner, SIGNAL(statusReady(QString)), returnStatusLabel, SIGNAL(onReturnStatusReady(QString)));
-//    new borrower{&app};
     return app.exec();
 }
